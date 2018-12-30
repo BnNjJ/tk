@@ -52,4 +52,4 @@ client.on('message', message =>{
 });
 
 client.on('ready',() => console.log('Launched!'));
-client.login("NTI4OTgxNzg4MzM3NjM1Mzcw.DwqMeQ.uWiODcQ5OvFKi3-qr8C-zeD0QzU");
+client.login(process.env.BOT_TOKEN);
