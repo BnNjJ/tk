@@ -7,7 +7,7 @@ exports.run = async (client, message, args, ops) => {
         .setDescription("Bot Information")
         .setColor("#15f153")
         .addField("Bot Name", 'Hammerlock')
-        .addField("Created On", '26 Dec 2018')
+        .addField("Created On", '31 Dec 2018')
         .addField("Created by", 'Flyz#0007');
 
     return message.channel.send(clientembed);
