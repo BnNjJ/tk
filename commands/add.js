@@ -25,7 +25,7 @@ module.exports.run = async (bot, message, args) => {
   .setTitle(`User added!`)
   .setDescription(`${message.author.tag} has added ${user} to this ticket!`)
   .setTimestamp()
-  .setFooter(`${config.footer}`);
+  .setFooter(``HammerLock ©`);
 
   message.channel.send(embed)
 
