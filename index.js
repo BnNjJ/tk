@@ -23,12 +23,12 @@ fs.readdir("./commands/", (err, files) => {
   });
 });
 
-client.on("ready", async () => {
+bot.on("ready", async () => {
   console.log(`${bot.user.username} is now online!`)
-  client.user.setActivity("~help", {type: "PLAYING"});
+  bot.user.setActivity("~help", {type: "PLAYING"});
 });
 
-client.on("message", async message => {
+bot.on("message", async message => {
   if(!message.content.startsWith(prefix)) return;
   if(message.author.bot) return;
   if(message.channel.type === "dm") return;
@@ -41,4 +41,4 @@ client.on("message", async message => {
   if(commandfile) commandfile.run(bot,message,args);
 });
 
-client.login(process.env.BOT_TOKEN);
+bot.login(process.env.BOT_TOKEN);
