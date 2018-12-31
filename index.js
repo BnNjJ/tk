@@ -1,55 +1,44 @@
-const discord = require('discord.js');
-const client = new discord.Client();
-require('events').EventEmitter.defaultMaxListeners = Infinity;
-const fs = require('fs');
+const Discord = require ("discord.js");
+const fs = require("fs");
+const bot = new Discord.Client({disableEveryone: true});
+const config = require("./config.json");
+const colour = config.colour;
 
-
-
-const prefix = '~';
-const ownerID = '482925833535619083';
+bot.commands = new Discord.Collection();
+let prefix = config.prefix;
 
 fs.readdir("./commands/", (err, files) => {
 
-    if(err) console.log(err);
-  
-    let jsfile = files.filter(f => f.split(".").pop() === "js")
-    if(jsfile.length <= 0 ){
-      console.log("Couldn't find commands!");
-      return;
-    };
-    jsfile.forEach((f, i) => {
-      let props = require(`./commands/${f}`);
-      console.log(`${i + 1}: ${f} loaded!`);
-    });
+  if(err) console.log(err);
+
+  let jsfile = files.filter(f => f.split(".").pop() === "js")
+  if(jsfile.length <= 0 ){
+    console.log("Couldn't find commands!");
+    return;
+  };
+  jsfile.forEach((f, i) => {
+    let props = require(`./commands/${f}`);
+    console.log(`${i + 1}: ${f} loaded!`);
+    bot.commands.set(props.help.name, props);
   });
-client.on('ready', () => {
-    client.user.setStatus('online')
-    client.user.setActivity('~help', {type: 'Watching'})
-
 });
 
-
-client.on('message', message =>{
-    let args = message.content.slice(prefix.length).trim().split(' ');
-    let cmd = args.shift().toLowerCase();
-
-    if (message.author.bot) return;
-    if (!message.content.startsWith(prefix)) return;
-
-    try {
-
-        delete require.cache[require.resolve(`./commands/${cmd}.js`)];
-        let ops = {
-            ownerID: ownerID
-        }
-        let commandFIle = require(`./commands/${cmd}.js`);
-        commandFIle.run(client, message, args, ops);
-
-    } catch (e) {
-        console.log(e.stack);
-    }
-
+client.on("ready", async () => {
+  console.log(`${bot.user.username} is now online!`)
+  client.user.setActivity("~help", {type: "PLAYING"});
 });
 
-client.on('ready',() => console.log('Launched!'));
+client.on("message", async message => {
+  if(!message.content.startsWith(prefix)) return;
+  if(message.author.bot) return;
+  if(message.channel.type === "dm") return;
+
+  let messageArray = message.content.split(" ");
+  let cmd = messageArray[0];
+  let args = messageArray.slice(1);
+
+  let commandfile = bot.commands.get(cmd.slice(prefix.length));
+  if(commandfile) commandfile.run(bot,message,args);
+});
+
 client.login(process.env.BOT_TOKEN);
