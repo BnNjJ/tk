@@ -1,21 +1,22 @@
 const Discord = require ("discord.js");
 const config = require("../config.json");
+const colour = config.colour;
 const categoryID = config.CategoryID;
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (bot, message, args) => {
   message.delete();
 
   const embed = new Discord.RichEmbed()
-    .setColor(0xddddd)
-    .setDescription(`You already have a ticket open! If this is incorrect, please contact a staff member immediately!`)
-    .setTimestamp()
-   .setFooter(`HammerLock ©`);
+  .setColor(colour)
+  .setDescription(`:x: You already have a ticket open! If this is incorrect, please contact a staff member immediately!`)
+  .setTimestamp()
+  .setFooter(`HammerLock ©`);
 
   const embed3 = new Discord.RichEmbed()
-    .setColor(0xddddd)
-    .setDescription("Thank you for reaching our support team! A member of our support team will be with you soon!")
-    .setTimestamp()
-   .setFooter(`HammerLock ©`);
+  .setColor(colour)
+  .setDescription("Thank you for reaching our support team! A member of our support team will be with you soon!")
+  .setTimestamp()
+  .setFooter(`HammerLock ©`);
 
   let user1 = message.author.username.toLowerCase()
   if (message.guild.channels.exists(`name`, `ticket-${user1}-${message.author.discriminator}`)) {
@@ -41,7 +42,7 @@ module.exports.run = async (client, message, args) => {
     })
 
     const embed2 = new Discord.RichEmbed()
-    .setColor(0x00000)
+    .setColor(colour)
     .setDescription(`Your ticket has been created! Visit your ticket at ${c}`)
     .setTimestamp()
     .setFooter(`HammerLock ©`);
