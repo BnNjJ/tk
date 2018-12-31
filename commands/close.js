@@ -21,7 +21,7 @@ module.exports.run = async (bot, message, args) => {
     .setTitle("Ticket closure confirmed!")
     .setDescription("The ticket will close in 10 seconds!")
     .setTimestamp()
-    .setFooter(`HammerLock ©`);
+    .setFooter(`${config.footer}`);
 
     const embed3 = new Discord.RichEmbed()
     .setColor(colour)
