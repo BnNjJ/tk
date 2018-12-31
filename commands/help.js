@@ -1,18 +1,22 @@
-const Discord = require('discord.js');
+const Discord = require("discord.js");
+const config = require("../config.json");
+let colour = config.colour;
+let footer = config.footer;
 
-exports.run = async (client, message, args, ops) => {
+module.exports.run = async (bot, message, args) => {
+  message.delete();
 
+  let embed = new Discord.RichEmbed()
+  .setTitle("Ticket Bot - Help")
+  .setDescription("**Created by**: Flyz#0007\n\n**new** - Creates new ticket channel.\n**close** - Closes current ticket channel.\n**add (@member)** - Adds member to ticket.\n**remove (@member)** - Removes member from ticket")
+  .setFooter("~poll")
+  .setColor(colour)
+  .setTimestamp()
+  .setFooter(`HammerLock ©`);
 
-    let clientembed = new Discord.RichEmbed()
-        .setDescription("List of commands")
-        .setColor("#11111")
-        .addField("~info", 'show bot info')
-        .addField("~poll", 'create a suggestion')
-        .addField("~new", 'create a ticket')
-        .addField("~close", 'close a ticket')
-        .addField("~add", 'add another person to the ticket')
-        .addField("~remove", 'remove a person from the ticket');
+  message.channel.send(embed);
 
-    return message.channel.send(clientembed);
-    
-};
+}
+module.exports.help = {
+  name: "help"
+}
